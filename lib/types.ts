@@ -10,7 +10,7 @@ export interface ProfessionalSummary {
   summary: string;
 }
 
-export interface WorkExperience {
+export interface WorkExperienceItem {
   id: string;
   company: string;
   position: string;
@@ -19,6 +19,10 @@ export interface WorkExperience {
   endDate: string;
   description: string;
   hightlights: string[];
+}
+
+export interface WorkExperience {
+  experiences: WorkExperienceItem[];
 }
 
 export interface EducationItem {
@@ -42,7 +46,7 @@ export interface Education {
 export interface ResumeData {
   personalInfo: PersonalInfo;
   professionalSummary?: ProfessionalSummary;
-  workExperience?: WorkExperience[];
+  workExperience?: WorkExperience;
   education?: Education;
   lastSaved?: Date;
 }
