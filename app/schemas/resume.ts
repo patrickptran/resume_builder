@@ -30,7 +30,7 @@ export const workExperienceItemSchema = z.object({
     .string()
     .min(30, "Description should be at least 30 characters")
     .max(1000, "Description should not exceed 1000 characters"),
-  hightlights: z.array(z.string()).default([]),
+  highlights: z.array(z.string()).default([]),
 });
 
 export const workExperienceSchema = z.object({
