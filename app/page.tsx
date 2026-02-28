@@ -3,8 +3,8 @@ import { ProfessionalSummary } from "./components/forms/ProfessionalSummary";
 import { WorkExperience } from "./components/forms/WorkExperience";
 import { Education } from "./components/forms/Education";
 import { ResumePreview } from "./components/preview/ResumePreview";
-import { Skills } from "./components/preview/Skills";
-import { Projects } from "./components/preview/Projects";
+import { Skills } from "./components/forms/Skills";
+import { Projects } from "./components/forms/Projects";
 
 export default function Home() {
   return (

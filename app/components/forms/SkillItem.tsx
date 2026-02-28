@@ -12,29 +12,15 @@ import { MoreVertical, Pencil, Trash, Link as LinkIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { type SkillItem as SkillItemType } from "@/app/schemas/resume";
 import { skillLevel } from "@/lib/types";
+import { getLevelColor } from "@/lib/utils";
 
 interface SkillItemProps {
   skill: SkillItemType;
   onEdit: () => void;
-  ondelete: () => void;
+  onDelete: () => void;
 }
 
 export const SkillItem = ({ skill, onEdit, onDelete }: SkillItemProps) => {
-  const getLevelColor = (level: skillLevel) => {
-    switch (level) {
-      case "Beginner":
-        return "bg-blue-500";
-      case "Intermediate":
-        return "bg-green-500";
-      case "Advanced":
-        return "bg-purple-500";
-      case "Expert":
-        return "bg-orange-500";
-      default:
-        return "bg-gray-500";
-    }
-  };
-
   return (
     <Card>
       <CardContent className="flex items-center justify-between p-4">
