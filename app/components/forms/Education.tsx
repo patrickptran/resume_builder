@@ -9,7 +9,7 @@ import { Plus } from "lucide-react";
 
 import {
   educationSchema,
-  type Education,
+  type Education as EducationType,
   type EducationItem,
 } from "@/app/schemas/resume";
 
@@ -25,7 +25,7 @@ export const Education = () => {
   const [editingEducation, setEditingEducation] =
     useState<EducationItem | null>(null);
 
-  const { watch, setValue } = useForm<Education>({
+  const { watch, setValue } = useForm<EducationType>({
     resolver: zodResolver(educationSchema),
     defaultValues: loadFromLocalStorage().education || { education: [] },
   });
@@ -74,7 +74,7 @@ export const Education = () => {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Education</CardTitle>
-          <Button onClick={handleAdd} size="sm" variant="outline">
+          <Button onClick={handleAdd} className="mt-2">
             <Plus className="mr-2 h-4 w-4" />
             Add Education
           </Button>

@@ -64,7 +64,7 @@ export const WorkExperience = () => {
   return (
     <>
       <Card className="mb-4">
-        <CardHeader>
+        <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="text-xl">Work Experience</CardTitle>
           <Button onClick={handleAdd} className="mt-2">
             <Plus className="mr-2 h-4 w-4" />
@@ -86,10 +86,6 @@ export const WorkExperience = () => {
               No work experience added yet.
             </p>
           )}
-          <Button onClick={handleAdd} className="mt-4">
-            <Plus className="mr-2 h-4 w-4" />
-            Add Experience
-          </Button>
         </CardContent>
       </Card>
       <WorkExperienceDialog
