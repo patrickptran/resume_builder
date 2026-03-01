@@ -71,7 +71,7 @@ export const Projects = () => {
     <>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
-          \<CardTitle>Projects</CardTitle>
+          <CardTitle>Projects</CardTitle>
           <Button onClick={handleAdd} size="sm">
             <Plus className="mr-2 h-4 w-4" />
             Add Project

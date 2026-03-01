@@ -18,6 +18,9 @@ import {
 } from "@/app/schemas/resume";
 import { loadFromLocalStorage } from "@/lib/localStorage";
 import { getLevelColor } from "@/lib/utils";
+import { useTemplate } from "@/context/TemplateContext";
+import { getTemplateStyles } from "../template/styles";
+import { cn } from "@/lib/utils";
 
 export const ResumePreview: React.FC = () => {
   const targetRef = useRef<HTMLDivElement>(null);
@@ -30,6 +33,8 @@ export const ResumePreview: React.FC = () => {
   const [education, setEducation] = useState<Education | null>(null);
   const [skills, setSkills] = useState<Skills | null>(null);
   const [projects, setProjects] = useState<Projects | null>(null);
+  const { template, colorScheme } = useTemplate();
+  const styles = getTemplateStyles(template, colorScheme);
 
   useEffect(() => {
     // initial load from localStorage
@@ -173,21 +178,19 @@ export const ResumePreview: React.FC = () => {
       <CardContent>
         <div
           ref={targetRef}
-          className="space-y-6 print:bg-white print:p-6"
+          className={styles.container}
           style={{
-            maxWidth: "210mm",
-            margin: "0 auto",
             background: "white",
             color: "black",
           }}
         >
           {/* Personal Info */}
-          <div className="print:mb-6">
-            <h2 className="text-2xl font-semibold text-gray-900">
+          <div>
+            <h2 className={styles.header.title}>
               {personalInfo.firstName} {personalInfo.lastName}
             </h2>
 
-            <div className="text-sm text-gray-600 space-y-1">
+            <div className={styles.header.subtitle}>
               <p>{personalInfo.email}</p>
               <p>{personalInfo.phone}</p>
               <p>{personalInfo.location}</p>
@@ -197,12 +200,12 @@ export const ResumePreview: React.FC = () => {
           {/* Professional Summary */}
           {professionalSummary && professionalSummary.summary && (
             <>
-              <Separator className="my-4" />
-              <div>
-                <h3 className="text-md font-semibold mb-2">
+              <Separator />
+              <div className={styles.section.container}>
+                <h3 className={styles.section.container}>
                   Professional Summary
                 </h3>
-                <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                <p className={styles.text.muted}>
                   {professionalSummary.summary}
                 </p>
               </div>
@@ -214,13 +217,13 @@ export const ResumePreview: React.FC = () => {
           {skills && skills.skills.length > 0 && (
             <>
               <Separator />
-              <div>
-                <h3 className="text-lg font-semibold mb-4">Skills</h3>
+              <div className={styles.section.container}>
+                <h3 className={styles.section.title}>Skills</h3>
                 <div className="space-y-3">
                   {Object.entries(groupedSkills).map(([category, skills]) => (
                     <div key={category}>
                       <h4 className="font-medium text-sm mb-1">{category}</h4>
-                      <p className="text-sm text-gray-600">
+                      <p className={styles.text.muted}>
                         {skills
                           .map((skill) => `${skill.name} (${skill.level})`)
                           .join(" * ")}
@@ -237,27 +240,30 @@ export const ResumePreview: React.FC = () => {
             <>
               <Separator className="my-4" />
 
-              <div>
-                <h3 className="text-lg font-semibold mb-4">Work Experience</h3>
-                <div className="space-y-4">
+              <div className={styles.section.container}>
+                <h3 className={styles.section.title}>Work Experience</h3>
+                <div className={styles.section.content}>
                   {workExperience.experiences.map((exp) => (
                     <div key={exp.id} className="space-y-2">
                       <div>
                         <h4 className="font-medium">{exp.position}</h4>
-                        <p className="text-sm text-muted-foreground">
+                        <p className={styles.text.muted}>
                           {exp.company} - {exp.location}
                         </p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className={styles.text.muted}>
                           {exp.current
                             ? `${exp.startDate} - Present`
                             : `${exp.startDate} - ${exp.endDate}`}
                         </p>
                       </div>
-                      <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                        {exp.description}
-                      </p>
+                      <p className={styles.text.normal}>{exp.description}</p>
                       {exp.highlights && exp.highlights.length > 0 && (
-                        <ul className="text-sm list-disc list-inside space-y-1">
+                        <ul
+                          className={cn(
+                            styles.text.normal,
+                            "list-disc list-inside space-y-1",
+                          )}
+                        >
                           {exp.highlights.map((highlight, index) => (
                             <li key={index}>{highlight}</li>
                           ))}
@@ -274,9 +280,9 @@ export const ResumePreview: React.FC = () => {
           {projects && projects.projects.length > 0 && (
             <>
               <Separator />
-              <div>
-                <h3 className="text-lg font-semibold mb-4">Projects</h3>
-                <div className="space-y-4">
+              <div className={styles.section.container}>
+                <h3 className={styles.section.title}>Projects</h3>
+                <div className={styles.section.content}>
                   {projects.projects.map((project) => (
                     <div key={project.id} className="space-y-2">
                       <div>
@@ -287,29 +293,45 @@ export const ResumePreview: React.FC = () => {
                               href={project.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-sm text-muted-foreground hover:text-primary"
+                              className={cn(
+                                styles.text.muted,
+                                "hover: text-primary",
+                              )}
                             >
                               View Project ↗
                             </a>
                           )}
                         </div>
-                        <p className="text-sm text-muted-foreground">
+                        <p className={styles.text.muted}>
                           {project.role} •{" "}
                           {project.current
                             ? `${project.startDate} - Present`
                             : `${project.startDate} - ${project.endDate}`}
                         </p>
                       </div>
-                      <p className="text-sm">{project.description}</p>
+                      <p className={styles.text.normal}>
+                        {project.description}
+                      </p>
                       <div className="flex flex-wrap gap-2">
                         {project.technologies.map((tech, index) => (
-                          <Badge key={index} variant="secondary">
+                          <span
+                            key={index}
+                            className={cn(
+                              styles.text.normal,
+                              "px-2 py-1 bg-grap-100 rounded",
+                            )}
+                          >
                             {tech}
-                          </Badge>
+                          </span>
                         ))}
                       </div>
                       {project.highlights.length > 0 && (
-                        <ul className="text-sm list-disc list-inside space-y-1">
+                        <ul
+                          className={cn(
+                            styles.text.normal,
+                            "list-disc list-inside space-y-1",
+                          )}
+                        >
                           {project.highlights.map((highlight, index) => (
                             <li key={index}>{highlight}</li>
                           ))}
@@ -326,17 +348,17 @@ export const ResumePreview: React.FC = () => {
           {education && education.education.length > 0 && (
             <>
               <Separator className="my-4" />
-              <div>
-                <h3 className="text-lg font-semibold mb-4">Education</h3>
-                <div className="space-y-4">
+              <div className={styles.section.container}>
+                <h3 className={styles.section.title}>Education</h3>
+                <div className={styles.section.content}>
                   {education.education.map((edu) => (
                     <div key={edu.id} className="space-y-2">
                       <div>
                         <h4 className="font-medium">{edu.school}</h4>
-                        <p className="text-sm text-muted-foreground">
+                        <p className={styles.text.muted}>
                           {edu.degree} in {edu.field}
                         </p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className={styles.text.muted}>
                           {edu.location} |{" "}
                           {edu.current
                             ? `${edu.startDate} - Present`
@@ -346,10 +368,15 @@ export const ResumePreview: React.FC = () => {
                       </div>
 
                       {edu.description && (
-                        <p className="text-sm">{edu.description}</p>
+                        <p className={styles.text.normal}>{edu.description}</p>
                       )}
                       {edu.achievements.length > 0 && (
-                        <ul className="text-sm list-disc list-inside space-y-1 mt-2">
+                        <ul
+                          className={cn(
+                            styles.text.normal,
+                            "list-disc list-inside space-y-1",
+                          )}
+                        >
                           {edu.achievements.map((achievement, index) => (
                             <li key={index}>{achievement}</li>
                           ))}
