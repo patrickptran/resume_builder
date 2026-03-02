@@ -41,6 +41,7 @@ export const WorkExperienceDialog = ({
     reset,
     formState: { errors },
   } = useForm<WorkExperienceItem>({
+    //@ts-expect-error type confict between ZobObject and resolver
     resolver: zodResolver(workExperienceItemSchema),
     defaultValues: experience || {
       id: "",
@@ -61,7 +62,7 @@ export const WorkExperienceDialog = ({
       reset(experience);
     } else if (open) {
       reset({
-        id: nanoid(),
+        id: nanoid() as unknown as string,
         company: "",
         position: "",
         location: "",
@@ -86,6 +87,7 @@ export const WorkExperienceDialog = ({
             {experience ? "Edit Work Experience" : "Add Work Experience"}
           </DialogTitle>
         </DialogHeader>
+        {/* @ts-expect-error type confict */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">

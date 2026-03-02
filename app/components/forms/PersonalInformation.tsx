@@ -70,12 +70,12 @@ export const PersonalInformation = () => {
           <div className="space-y-2">
             <Label htmlFor="phone">Phone</Label>
             <Input
-              id="phone"
-              {...register("phone")}
+              id="phoneNumber"
+              {...register("phoneNumber")}
               placeholder="+33 6 12 34 56 78"
             />
-            {errors.phone && (
-              <p className="text-red-500">{errors.phone.message}</p>
+            {errors.phoneNumber && (
+              <p className="text-red-500">{errors.phoneNumber.message}</p>
             )}
           </div>
 

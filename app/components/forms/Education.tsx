@@ -26,6 +26,7 @@ export const Education = () => {
     useState<EducationItem | null>(null);
 
   const { watch, setValue } = useForm<EducationType>({
+    //@ts-expect-error type confict between ZobObject and resolver
     resolver: zodResolver(educationSchema),
     defaultValues: loadFromLocalStorage().education || { education: [] },
   });

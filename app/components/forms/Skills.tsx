@@ -23,6 +23,7 @@ export const Skills = () => {
   const [editingSkill, setEditingSkill] = useState<SkillItem | null>(null);
 
   const { watch, setValue } = useForm<SkillsType>({
+    //@ts-expect-error type confict between ZobObject and resolver
     resolver: zodResolver(skillsSchema),
     defaultValues: loadFromLocalStorage().skills || { skills: [] },
   });

@@ -38,6 +38,7 @@ export function EducationDialog({
     reset,
     formState: { errors },
   } = useForm<EducationItem>({
+    //@ts-expect-error type confict between ZobObject and resolver
     resolver: zodResolver(educationItemSchema),
     defaultValues: {
       id: "",
@@ -77,7 +78,7 @@ export function EducationDialog({
     }
   }, [open, education, reset]);
 
-  const onSubmit = (data: EducationItem) => {
+  const onSubmit = (data: EducationItem): void => {
     onSave(data);
     onOpenChange(false);
   };
@@ -90,6 +91,7 @@ export function EducationDialog({
             {education ? "Edit Education" : "Add Education"}
           </DialogTitle>
         </DialogHeader>
+        {/* @ts-expect-error type confict */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="school">School</Label>

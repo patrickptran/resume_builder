@@ -16,9 +16,10 @@ export interface WorkExperienceItem {
   position: string;
   location: string;
   startDate: string;
+  current: boolean;
   endDate: string;
   description: string;
-  hightlights: string[];
+  highlights: string[];
 }
 
 export interface WorkExperience {
@@ -35,7 +36,7 @@ export interface EducationItem {
   endDate?: string;
   current: boolean;
   description?: string;
-  achivements?: string[];
+  achievements: string[];
   gpa?: string;
 }
 

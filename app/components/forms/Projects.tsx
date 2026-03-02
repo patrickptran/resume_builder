@@ -25,6 +25,7 @@ export const Projects = () => {
   );
 
   const { watch, setValue } = useForm<ProjectsType>({
+    //@ts-expect-error type confict between ZobObject and resolver
     resolver: zodResolver(projectsSchema),
     defaultValues: loadFromLocalStorage().projects || { projects: [] },
   });

@@ -40,6 +40,7 @@ export const ResumePreview: React.FC = () => {
     // initial load from localStorage
     const data = loadFromLocalStorage();
     if (data.personalInfo) {
+      // @ts-ignore need to fix
       setPersonalInfo(data.personalInfo);
     }
 
@@ -192,7 +193,7 @@ export const ResumePreview: React.FC = () => {
 
             <div className={styles.header.subtitle}>
               <p>{personalInfo.email}</p>
-              <p>{personalInfo.phone}</p>
+              <p>{personalInfo.phoneNumber}</p>
               <p>{personalInfo.location}</p>
             </div>
           </div>

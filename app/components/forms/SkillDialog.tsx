@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { Resolver, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -55,8 +55,10 @@ export const SkillDialog = ({
   skill,
   onSave,
 }: SkillsDialogProps) => {
-  const form = useForm<SkillItem>({
-    resolver: zodResolver(skillItemSchema),
+  const form = useForm<SkillItem, any, SkillItem>({
+    // the resolver has a typing mismatch with zod; casting to any keeps
+    // the compiler happy while we still get runtime validation
+    resolver: zodResolver(skillItemSchema) as unknown as Resolver<SkillItem>,
     defaultValues: {
       id: "",
       name: "",

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { Resolver, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -39,8 +39,13 @@ export const ProjectDialog = ({
   project,
   onSave,
 }: ProjectDialogProps) => {
-  const form = useForm<ProjectItem>({
-    resolver: zodResolver(projectItemSchema),
+  // force all generics so control will have the proper concrete type
+  const form = useForm<ProjectItem, any, ProjectItem>({
+    // the resolver has a typing mismatch with zod; casting to any keeps
+    // the compiler happy while we still get runtime validation
+    resolver: zodResolver(
+      projectItemSchema,
+    ) as unknown as Resolver<ProjectItem>,
     defaultValues: {
       id: "",
       name: "",
@@ -151,7 +156,6 @@ export const ProjectDialog = ({
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="role"

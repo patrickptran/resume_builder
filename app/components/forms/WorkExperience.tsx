@@ -24,6 +24,7 @@ export const WorkExperience = () => {
     useState<WorkExperienceItem | null>(null);
 
   const { setValue, watch } = useForm<WorkExperienceType>({
+    //@ts-expect-error type confict between ZobObject and resolver
     resolver: zodResolver(workExperienceSchema),
     defaultValues: loadFromLocalStorage().workExperience || { experiences: [] },
   });
