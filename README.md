@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Resume Builder V2
+
+This repository contains a **Next.js 13** application for creating, editing,
+and previewing a resume. The project is written in **TypeScript**, uses
+**React Hook Form** with **Zod** schemas for client-side validation, and
+showcases a modular component design driven by the `app/` route
+architecture and Tailwind CSS.
+
+[Watch Demo 🚀](https://my-vibe-coder.vercel.app/)
+
+## Features
+
+- Dynamic form dialogs for personal info, education, work experience,
+skills, and projects.
+- Auto‑save to local storage with a convenient header indicator.
+- Drag‑and‑drop section ordering and live preview.
+- Schema validation using Zod; data models defined in
+  `app/schemas/resume.ts`.
+- UI built with custom Shadcn components (`components/ui/*`).
 
 ## Getting Started
 
-First, run the development server:
+### Requirements
+
+- Node.js 18+ (tested with 20)
+
+### Development
 
 ```bash
+# install dependencies
+npm install
+
+# start dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser. Changes
+auto-reload thanks to Next.js and Turbopack.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Building for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build     # compile and type-check
+npm run start     # run the production server
+```
 
-## Learn More
+Or deploy to Vercel/other hosting platforms using the standard Next.js
+workflow.
 
-To learn more about Next.js, take a look at the following resources:
+### Type Checking & Linting
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run lint
+npm run type-check
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📁 Project Structure
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+app/                # Next.js 13 app directory
+  components/        # page-specific components & dialogs
+    forms/           # form dialogs for each resume section
+    preview/         # resume preview component
+  schemas/           # Zod schemas + exported types
+components/         # shared UI primitives (Form, Button, etc.)
+context/            # React context (autosave, template order, etc.)
+hooks/              # custom hooks (useToast, useAutoSave, ...)
+lib/                # utilities and type defs
+public/             # static assets
+```
